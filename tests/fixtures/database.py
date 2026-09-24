@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.pool import NullPool
 
-from app.core import settings
+from app.core.config import settings
 from app.database.session import get_db
 from app.main import app
 
