@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "integer"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current order status"
+        }
+      },
+      "required": [
+        "order_id",
+        "status"
+      ]
+    }
+  },
+  "required": [
+    "event_id",
+    "event_type",
+    "payload"
+  ]
+}
