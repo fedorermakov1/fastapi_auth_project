@@ -17,6 +17,12 @@ router = APIRouter(
     tags=["Development"]
 )
 
+@router.get("/health")
+async def health():
+    return {
+        "status": "ok"
+    }
+
 
 @router.get("/redis-test")
 async def redis_test(request: Request):
