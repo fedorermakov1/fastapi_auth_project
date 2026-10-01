@@ -19,3 +19,4 @@ confluent-kafka[json,schemaregistry]==2.15.1
 pytest
 
 pytest-asyncio
+pytest-asyncio
