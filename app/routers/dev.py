@@ -21,7 +21,7 @@ router = APIRouter(
 async def health():
     return {
         "status": "ok",
-        "message": "Healthy"
+        "message": "Healthy - CD test"
     }
 
 
