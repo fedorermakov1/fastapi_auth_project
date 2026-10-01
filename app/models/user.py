@@ -1,10 +1,14 @@
-from sqlalchemy import String, Boolean, func
+from datetime import datetime
+from typing import TYPE_CHECKING
+
+from sqlalchemy import Boolean, DateTime, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.models import Base
 
-from datetime import datetime
-from sqlalchemy import DateTime
+if TYPE_CHECKING:
+    from app.models.refresh_token import RefreshToken
+    from app.models.task import Task
 
 
 class User(Base):

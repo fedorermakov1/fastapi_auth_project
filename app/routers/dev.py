@@ -39,7 +39,7 @@ async def redis_test(request: Request):
 
 
 @router.get("/cache-test1")
-async def cache_test(cache: Cache = Depends(get_cache)):
+async def cache_test_1(cache: Cache = Depends(get_cache)):
     print("CACHE OBJECT:", cache)
     print("REDIS OBJECT:", cache.redis)
 
@@ -49,14 +49,14 @@ async def cache_test(cache: Cache = Depends(get_cache)):
 
 
 @router.get("/cache-test2")
-async def cache_test(cache: Cache = Depends(get_cache)):
+async def cache_test_2(cache: Cache = Depends(get_cache)):
     await cache.set("test_key", "hello")
 
     return {"message": "saved"}
 
 
 @router.get("/cache-test3")
-async def cache_test(cache: Cache = Depends(get_cache)):
+async def cache_test_3(cache: Cache = Depends(get_cache)):
     value = await cache.get("test_key")
 
     return {
@@ -332,7 +332,7 @@ async def publish_invalid_order(request: Request):
     return {"status": "published invalid message"}
 
 @router.post("/publish/{event_id}")
-async def publish_order(
+async def publish_order_by_id(
     event_id: UUID,
     request: Request,
 ):

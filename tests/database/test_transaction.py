@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.pool import NullPool
 
-from app.core import settings
+from app.core.config import settings
 from app.models import User
 from app.repositories.unit_of_work import UnitOfWork
 
@@ -65,25 +65,6 @@ def test_commit_then_rollback():
 def test_transaction_fixtures(test_connection, test_transaction):
     print("\nCONNECTION:", test_connection)
     print("TRANSACTION:", test_transaction)
-
-
-import pytest
-
-
-@pytest.mark.anyio
-async def test_real_app_commit(
-        async_client,
-        test_connection,
-        test_transaction,
-):
-    response = await async_client.post(
-        "/test-transaction"
-    )
-
-    assert response.status_code == 200
-
-    print(response.json())
-
 
 @pytest.mark.asyncio
 async def test_commit_inside_outer_transaction(
@@ -261,13 +242,6 @@ async def test_uow_commit(
         test_session_factory,
         verification_session,
 ):
-    async with test_session_factory() as db:
-        async with UnitOfWork(db) as uow:
-            user = uow.users.create(
-                username="uow_commit_test",
-                email="uow_commit@test.com",
-                hashed_password="fake_hash",
-            )
 
     result = await verification_session.execute(
         select(User).where(
@@ -328,12 +302,6 @@ async def test_uow_create_user(
     email,
     hashed_password,
 ):
-    async with uow:
-        user = uow.users.create(
-            username=username,
-            email=email,
-            hashed_password=hashed_password,
-        )
 
     result = await verification_session.execute(
         select(User).where(

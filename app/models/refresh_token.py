@@ -1,12 +1,16 @@
-from sqlalchemy import String, DateTime, Boolean, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
+
+from sqlalchemy import Boolean, DateTime, ForeignKey, String, Uuid
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.models import Base
 
+if TYPE_CHECKING:
+    from app.models.user import User
+
 from uuid import UUID, uuid4
-from sqlalchemy import Uuid
+
 
 
 class RefreshToken(Base):

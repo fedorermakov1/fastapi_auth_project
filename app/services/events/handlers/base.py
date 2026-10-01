@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from app.schemas.events import Event, OrderCreatedEvent
+from app.schemas.events import Event
 
 
 class EventHandler(Protocol):

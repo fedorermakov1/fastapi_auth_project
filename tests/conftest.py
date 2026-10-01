@@ -21,5 +21,5 @@ from tests.fixtures.users import test_user, admin_user
 from tests.fixtures.overrides import (
     fake_cache,
     fake_uow,
-    fake_current_user,
+
 )

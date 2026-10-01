@@ -1,7 +1,5 @@
 import time
 
-from celery import Celery
-
 from app.celery_app import celery_app
 
 attempts = 0

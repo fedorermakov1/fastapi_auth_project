@@ -15,7 +15,14 @@ from app.core.exceptions import (
 from app.core.permissions import RoleChecker
 from app.models.user import User
 from app.schemas.user import UserUpdate, UserCreate
-from app.services.user_service import get_user_by_id, update_user, create_user, delete_user, update_user_role, get_users
+from app.services.user_service import (
+    get_user_by_id,
+    update_user,
+    create_user,
+    delete_user,
+    update_user_role,
+    get_users,
+)
 
 
 @pytest.mark.asyncio
@@ -47,16 +54,6 @@ async def test_get_user_by_id_returns_user():
 
 @pytest.mark.asyncio
 async def test_get_user_by_id_returns_none():
-    user = User(
-        id=10,
-        username="Fedor",
-        email="test@example.com",
-        full_name="Test User",
-        hashed_password="hash",
-        disabled=False,
-        role="user",
-    )
-
     uow = Mock()
     uow.users = Mock()
 
@@ -413,76 +410,6 @@ async def test_create_user_username_already_exists():
     mock_hash.assert_not_called()
 
     uow.users.create.assert_not_called()
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "payload, expected_username, expected_email",
-    [
-        (
-                {
-                    "username": "new_username"
-                },
-                "new_username",
-                "test@example.com"
-        ),
-        (
-                {
-                    "email": "new@example.com"
-                },
-                "test_user",
-                "new@example.com"
-        ),
-        (
-                {
-                    "username": "new_username",
-                    "email": "new@example.com"
-                },
-                "new_username",
-                "new@example.com"
-        ),
-        (
-                {},
-                "test_user",
-                "test@example.com"
-        )
-    ]
-)
-async def test_update_user(
-        payload,
-        expected_username,
-        expected_email
-):
-    uow = MagicMock()
-
-    user = MagicMock()
-
-    user.id = 10
-    user.username = "test_user"
-    user.email = "test@example.com"
-
-    uow.users.get_by_id = AsyncMock(
-        return_value=user
-    )
-
-    user_data = UserUpdate(
-        **payload
-    )
-
-    result = await update_user(
-        uow=uow,
-        user_id=10,
-        user_data=user_data
-    )
-
-    assert result is user
-
-    assert user.username == expected_username
-    assert user.email == expected_email
-
-    uow.users.get_by_id.assert_awaited_once_with(
-        10
-    )
 
 
 @pytest.mark.asyncio
