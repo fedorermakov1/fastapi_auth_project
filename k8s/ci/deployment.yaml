@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-ci
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: fastapi-ci
+
+  template:
+    metadata:
+      labels:
+        app: fastapi-ci
+
+    spec:
+      containers:
+        - name: fastapi
+          image: PLACEHOLDER
+          ports:
+            - containerPort: 80
