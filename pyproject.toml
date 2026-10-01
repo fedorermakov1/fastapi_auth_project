@@ -1,0 +1,10 @@
+[tool.ruff]
+line-length = 100
+exclude = [
+    "alembic/env.py",
+    "alembic/versions",
+    "tests/conftest.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F"]
