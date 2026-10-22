@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+data:
+  ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+  ALGORITHM: "HS256"
+  MAX_RETRIES: "3"
+  RABBITMQ_URL: "amqp://guest:guest@rabbitmq:5672/"
+  RATE_LIMIT_STRATEGY: "fixed"
+
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  REDIS_URL: "redis://redis:6379/0"
+
+  KAFKA_BOOTSTRAP_SERVERS: "kafka:29092"
+  KAFKA_GROUP_ID: "orders-service"
+  SCHEMA_REGISTRY_URL: "http://schema-registry:8081"

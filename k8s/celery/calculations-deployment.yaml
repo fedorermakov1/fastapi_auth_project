@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-calculations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-calculations
+  template:
+    metadata:
+      labels:
+        app: celery-calculations
+    spec:
+      containers:
+        - name: celery-calculations
+          image: fastapi-auth:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - celery
+            - -A
+            - app.celery_app
+            - worker
+            - --loglevel=INFO
+            - --without-mingle
+            - --concurrency=2
+            - -Q
+            - calculations
+          envFrom:
+            - configMapRef:
+                name: fastapi-config
+            - secretRef:
+                name: fastapi-secret

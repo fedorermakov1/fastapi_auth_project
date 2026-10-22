@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-orders
+  template:
+    metadata:
+      labels:
+        app: celery-orders
+    spec:
+      containers:
+        - name: celery-orders
+          image: fastapi-auth:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - celery
+            - -A
+            - app.celery_app
+            - worker
+            - --loglevel=INFO
+            - --without-mingle
+            - --concurrency=2
+            - -Q
+            - orders
+          envFrom:
+            - configMapRef:
+                name: fastapi-config
+            - secretRef:
+                name: fastapi-secret

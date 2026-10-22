@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-emails
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: celery-emails
+  template:
+    metadata:
+      labels:
+        app: celery-emails
+    spec:
+      containers:
+        - name: celery-emails
+          image: fastapi-auth:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - celery
+            - -A
+            - app.celery_app
+            - worker
+            - --loglevel=INFO
+            - --without-mingle
+            - --concurrency=2
+            - -Q
+            - emails
+          envFrom:
+            - configMapRef:
+                name: fastapi-config
+            - secretRef:
+                name: fastapi-secret

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-retry-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-retry-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-retry-consumer
+    spec:
+      containers:
+        - name: kafka-retry-consumer
+          image: fastapi-auth:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - python
+            - -u
+            - -m
+            - app.services.kafka_retry_consumer
+          envFrom:
+            - configMapRef:
+                name: fastapi-config
+            - secretRef:
+                name: fastapi-secret
